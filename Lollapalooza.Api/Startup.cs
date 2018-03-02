@@ -14,6 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 using Lollapalooza.Services.Service;
 using Lollapalooza.Services.Interface;
+using Lime.Protocol.Serialization.Newtonsoft;
 
 namespace Lollapalooza.Api
 {
@@ -26,10 +27,17 @@ namespace Lollapalooza.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                 .AddJsonOptions(options =>
+                 {
+                     foreach (var settingsConverter in JsonNetSerializer.Settings.Converters)
+                     {
+                         options.SerializerSettings.Converters.Add(settingsConverter);
+                     }
+                 }); ;
             services.AddDbContext<LollapaloozaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LollapaloozaContext")));
             services.AddSwaggerGen(c =>
             {
@@ -43,11 +51,12 @@ namespace Lollapalooza.Api
             );
 
             services.AddSingleton<IShowService, ShowService>();
+            services.AddSingleton<ICarouselService, CarouselService>();
             services.AddSingleton<LollapaloozaContext>();
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSwagger();

@@ -14,7 +14,6 @@ namespace Lollapalooza.Api.Controllers
 
     public class ShowController : Controller
     {
-        private LollapaloozaContext _database;
         private readonly IShowService _showService;
         /// <summary>
         /// Show constructor
@@ -23,14 +22,13 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="showService"></param>
         public ShowController(LollapaloozaContext database, IShowService showService)
         {
-            _database = database;
             _showService = showService;
         }
         /// <summary>
         /// Method to return the list of show of a specific day and a specific stage
         /// </summary>
-        /// <param name="stage">Stage Name</param>
-        /// <param name="day"></param>
+        /// <param name="stage">Stage Name parameter</param>
+        /// <param name="day">Day parameter</param>
         /// <returns></returns>
         [HttpGet]
         public IActionResult Get(string stage, string day)
