@@ -11,10 +11,16 @@ namespace Lollapalooza.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Show")]
+
     public class ShowController : Controller
     {
         private LollapaloozaContext _database;
         private readonly IShowService _showService;
+        /// <summary>
+        /// Show constructor
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="showService"></param>
         public ShowController(LollapaloozaContext database, IShowService showService)
         {
             _database = database;
@@ -26,6 +32,7 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="stage">Stage Name</param>
         /// <param name="day"></param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult Get(string stage, string day)
         {
             try

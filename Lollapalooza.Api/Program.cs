@@ -20,6 +20,8 @@ namespace Lollapalooza.Api
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+            //This line is necessary because singleton can't consume scoped value (and inverse too), so this disable validation
+            .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .Build();
     }
 }
