@@ -12,6 +12,10 @@
     <DocumentationFile>bin\Release\netcoreapp2.0\Lollapalooza.Api.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>

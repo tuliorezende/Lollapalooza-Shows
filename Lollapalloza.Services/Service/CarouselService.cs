@@ -23,7 +23,7 @@ namespace Lollapalooza.Services.Service
                         {
                             Uri = new Uri(item.ImageUrl),
                             Title = $"{item.Stage} - {item.Band}",
-                            Text = $"{item.Schedule}"
+                            Text = $"{item.StartTime}"
                         }
                     },
                     Options = new DocumentSelectOption[]
