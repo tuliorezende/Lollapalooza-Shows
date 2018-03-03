@@ -14,8 +14,10 @@ namespace Lollapalooza.Services.Model
         public string Day { get; set; }
         [Required, JsonProperty("Band")]
         public string Band { get; set; }
-        [Required, JsonProperty("Schedule")]
-        public string Schedule { get; set; }
+        [Required, JsonProperty("StartTime")]
+        public string StartTime { get; set; }
+        [Required, JsonProperty("EndTime")]
+        public string EndTime { get; set; }
         [Required, JsonProperty("Stage")]
         public string Stage { get; set; }
         [Required, JsonProperty("ImageUrl")]

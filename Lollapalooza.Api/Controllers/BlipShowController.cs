@@ -23,9 +23,10 @@ namespace Lollapalooza.Api.Controllers
         /// <summary>
         /// Generate Document Collection for Shows
         /// </summary>
-        /// <param name="stage"></param>
-        /// <param name="day"></param>
+        /// <param name="stage">Stage Name parameter</param>
+        /// <param name="day">Day parameter</param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult Get(string stage, string day)
         {
             var showList = _showService.GetShows(stage, day);
