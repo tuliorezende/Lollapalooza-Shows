@@ -26,7 +26,7 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="stage">Stage Name parameter</param>
         /// <param name="day">Day parameter</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Route("{stage}/{day}")]
         public IActionResult Get(string stage, string day)
         {
             var showList = _showService.GetShows(stage, day);
