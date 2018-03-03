@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lollapalooza.Api.Controllers
 {
+    /// <summary>
+    /// Return the list of showson BLiP format
+    /// </summary>
     [Produces("application/json")]
     [Route("api/BlipShow")]
     public class BlipShowController : Controller
@@ -15,6 +18,11 @@ namespace Lollapalooza.Api.Controllers
         private readonly ICarouselService _carouselService;
         private readonly IShowService _showService;
 
+        /// <summary>
+        /// Instantiate some elements
+        /// </summary>
+        /// <param name="carouselService"></param>
+        /// <param name="showService"></param>
         public BlipShowController(ICarouselService carouselService, IShowService showService)
         {
             _carouselService = carouselService;
@@ -29,8 +37,15 @@ namespace Lollapalooza.Api.Controllers
         [HttpGet, Route("{stage}/{day}")]
         public IActionResult Get(string stage, string day)
         {
-            var showList = _showService.GetShows(stage, day);
-            return Ok(_carouselService.CreateCarousel(showList));
+            try
+            {
+                var showList = _showService.GetShows(stage, day);
+                return Ok(_carouselService.CreateCarousel(showList));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

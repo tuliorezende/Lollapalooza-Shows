@@ -9,6 +9,9 @@ using Lollapalooza.Services.Interface;
 
 namespace Lollapalooza.Api.Controllers
 {
+    /// <summary>
+    /// Return the list of shows
+    /// </summary>
     [Produces("application/json")]
     [Route("api/Show")]
 
