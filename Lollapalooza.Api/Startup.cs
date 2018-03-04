@@ -52,6 +52,7 @@ namespace Lollapalooza.Api
 
             services.AddSingleton<IShowService, ShowService>();
             services.AddSingleton<ICarouselService, CarouselService>();
+            services.AddSingleton<IUserScheduleService, UserScheduleService>();
             services.AddSingleton<LollapaloozaContext>();
 
         }

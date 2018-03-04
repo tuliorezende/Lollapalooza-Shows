@@ -8,9 +8,8 @@ namespace Lollapalooza.Services.Model
 {
     public class UserSchedule
     {
-        [Key, Column(Order = 0)]
         public string UserIdentifier { get; set; }
-        [Key, ForeignKey("ShowId"), Column(Order = 1)]
+        [ForeignKey("ShowId")]
         public int ShowId { get; set; }
         public virtual Show Show { get; set; }
     }

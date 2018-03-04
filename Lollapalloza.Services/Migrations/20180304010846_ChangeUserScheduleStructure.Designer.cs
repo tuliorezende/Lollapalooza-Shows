@@ -11,9 +11,10 @@ using System;
 namespace Lollapalooza.Services.Migrations
 {
     [DbContext(typeof(LollapaloozaContext))]
-    partial class LollapaloozaContextModelSnapshot : ModelSnapshot
+    [Migration("20180304010846_ChangeUserScheduleStructure")]
+    partial class ChangeUserScheduleStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,8 +58,6 @@ namespace Lollapalooza.Services.Migrations
                     b.HasKey("UserIdentifier", "ShowId");
 
                     b.HasIndex("ShowId");
-
-                    b.HasIndex("UserIdentifier", "ShowId");
 
                     b.ToTable("UserSchedule");
                 });

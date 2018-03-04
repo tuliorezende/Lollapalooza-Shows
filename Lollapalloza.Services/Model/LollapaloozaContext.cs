@@ -11,10 +11,12 @@ namespace Lollapalooza.Services.Model
     {
         public LollapaloozaContext(DbContextOptions<LollapaloozaContext> options) : base(options) { }
         public virtual DbSet<Show> Show { get; set; }
+        public virtual DbSet<UserSchedule> UserSchedule { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserSchedule>().HasKey(x => new { x.UserIdentifier, x.ShowId });
+            modelBuilder.Entity<UserSchedule>().HasIndex(x => new { x.UserIdentifier, x.ShowId });
             base.OnModelCreating(modelBuilder);
         }
     }
