@@ -30,30 +30,6 @@ namespace Lollapalooza.Api.Controllers
         }
 
         /// <summary>
-        /// Return User Schedule Entries
-        /// </summary>
-        /// <param name="userIdentifier">BLiP user Identifier</param>
-        /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Get(string userIdentifier, bool blipFormat = true)
-        {
-            try
-            {
-                List<Show> showList = _userSchedulerService.GetUserScheduleShows(userIdentifier);
-
-                if (blipFormat)
-                    return Ok(_carouselService.CreateCarousel(showList));
-                else
-                    return Ok(showList);
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-        /// <summary>
         /// Create a User Schedule Entry
         /// </summary>
         /// <param name="userIdentifier">BLiP user Identifier</param>

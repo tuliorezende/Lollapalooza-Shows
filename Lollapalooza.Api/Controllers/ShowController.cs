@@ -18,27 +18,64 @@ namespace Lollapalooza.Api.Controllers
     public class ShowController : Controller
     {
         private readonly IShowService _showService;
+        private readonly IUserScheduleService _userSchedulerService;
+        private readonly ICarouselService _carouselService;
+
         /// <summary>
         /// Show constructor
         /// </summary>
-        /// <param name="database"></param>
         /// <param name="showService"></param>
-        public ShowController(LollapaloozaContext database, IShowService showService)
+        /// <param name="userScheduleService"></param>
+        /// <param name="carouselService"></param>
+
+        public ShowController(IShowService showService, IUserScheduleService userScheduleService, ICarouselService carouselService)
         {
             _showService = showService;
+            _userSchedulerService = userScheduleService;
+            _carouselService = carouselService;
         }
         /// <summary>
         /// Method to return the list of show of a specific day and a specific stage
         /// </summary>
         /// <param name="stage">Stage Name parameter</param>
         /// <param name="day">Day parameter</param>
+        /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
         /// <returns></returns>
-        [HttpGet, Route("{stage}/{day}")]
-        public IActionResult Get(string stage, string day)
+        [HttpGet, Route("GetAllShows/{stage}/{day}/{blipFormat}")]
+        public IActionResult Get(string stage, string day, bool blipFormat = true)
         {
             try
             {
-                return Ok(_showService.GetShows(stage, day));
+                List<Show> showList = _showService.GetShows(stage, day);
+
+                if (blipFormat)
+                    return Ok(_carouselService.CreateCarousel(showList));
+                else
+                    return Ok(showList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        /// <summary>
+        /// Return Shows of a Specific user
+        /// </summary>
+        /// <param name="userIdentifier">BLiP user Identifier</param>
+        /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
+        /// <returns></returns>
+        [HttpGet, Route("GetUserShows/{userIdentifier}/{blipFormat}")]
+        public IActionResult Get(string userIdentifier, bool blipFormat = true)
+        {
+            try
+            {
+                List<Show> showList = _userSchedulerService.GetUserScheduleShows(userIdentifier);
+
+                if (blipFormat)
+                    return Ok(_carouselService.CreateCarousel(showList));
+                else
+                    return Ok(showList);
+
             }
             catch (Exception ex)
             {
