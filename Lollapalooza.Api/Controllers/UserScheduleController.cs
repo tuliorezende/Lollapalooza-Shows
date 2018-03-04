@@ -22,6 +22,7 @@ namespace Lollapalooza.Api.Controllers
         /// User Schedule Constructor
         /// </summary>
         /// <param name="userScheduleService"></param>
+        /// <param name="carouselService"></param>
         public UserScheduleController(IUserScheduleService userScheduleService, ICarouselService carouselService)
         {
             _userSchedulerService = userScheduleService;
