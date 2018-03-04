@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +12,7 @@ namespace Lollapalooza.Services.Model
         public string UserIdentifier { get; set; }
         [ForeignKey("ShowId")]
         public int ShowId { get; set; }
+        [JsonIgnore]
         public virtual Show Show { get; set; }
     }
 }
