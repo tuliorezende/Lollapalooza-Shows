@@ -22,5 +22,6 @@ namespace Lollapalooza.Services.Model
         public string Stage { get; set; }
         [Required, JsonProperty("ImageUrl")]
         public string ImageUrl { get; set; }
+        public virtual List<UserSchedule> UserScheduler { get; set; }
     }
 }

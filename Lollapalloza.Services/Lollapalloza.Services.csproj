@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180304002908_CreateUserScheduleTable.cs" />
+    <Compile Remove="Migrations\20180304003006_CreateUserScheduleTable.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Lime.Messaging" Version="0.7.278" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />
