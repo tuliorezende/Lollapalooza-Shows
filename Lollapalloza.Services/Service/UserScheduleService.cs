@@ -33,6 +33,22 @@ namespace Lollapalooza.Services.Service
         }
 
         /// <summary>
+        /// Get all show that user marked
+        /// </summary>
+        /// <param name="userIdentifier"></param>
+        /// <returns></returns>
+        public List<Show> GetUserScheduleShows(string userIdentifier)
+        {
+            List<Show> showList = _dataBase.UserSchedule.Where(x => x.UserIdentifier == userIdentifier).Select(x => x.Show).ToList();
+
+            if (showList.Count == 0)
+                throw new Exception($"The query with useridentifier: {userIdentifier} returned 0 elements");
+
+            return showList;
+
+        }
+
+        /// <summary>
         /// Method to remove all User Schedule Entry
         /// </summary>
         /// <param name="userIdentifier"></param>
@@ -45,7 +61,6 @@ namespace Lollapalooza.Services.Service
 
             _dataBase.UserSchedule.RemoveRange(userSchedule);
             _dataBase.SaveChanges();
-
         }
 
         /// <summary>
@@ -62,7 +77,6 @@ namespace Lollapalooza.Services.Service
 
             _dataBase.UserSchedule.Remove(userSchedule);
             _dataBase.SaveChanges();
-
         }
     }
 }
