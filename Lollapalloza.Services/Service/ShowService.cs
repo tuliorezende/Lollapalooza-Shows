@@ -16,6 +16,12 @@ namespace Lollapalooza.Services.Service
             _dataBase = lollapaloozaContext;
         }
 
+        /// <summary>
+        /// Return all shows based on stage and day filter
+        /// </summary>
+        /// <param name="stage"></param>
+        /// <param name="day"></param>
+        /// <returns></returns>
         public List<Show> GetShows(string stage, string day)
         {
             var showsList = _dataBase.Show.Where(x => x.Stage.ToLower() == stage.ToLower() && x.Day.ToLower() == day.ToLower()).ToList();

@@ -49,7 +49,7 @@ namespace Lollapalooza.Api.Controllers
                 List<Show> showList = _showService.GetShows(stage, day);
 
                 if (blipFormat)
-                    return Ok(_carouselService.CreateCarousel(showList));
+                    return Ok(_carouselService.CreateCarouselWithAllShows(showList));
                 else
                     return Ok(showList);
             }
@@ -72,7 +72,7 @@ namespace Lollapalooza.Api.Controllers
                 List<Show> showList = _userSchedulerService.GetUserScheduleShows(userIdentifier);
 
                 if (blipFormat)
-                    return Ok(_carouselService.CreateCarousel(showList));
+                    return Ok(_carouselService.CreaeCarouselWithMarkedShows(showList));
                 else
                     return Ok(showList);
 

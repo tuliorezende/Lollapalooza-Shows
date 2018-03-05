@@ -9,6 +9,7 @@ namespace Lollapalooza.Services.Interface
 {
     public interface ICarouselService
     {
-        DocumentSelect[] CreateCarousel(List<Show> shows);
+        DocumentSelect[] CreateCarouselWithAllShows(List<Show> shows);
+        DocumentSelect[] CreaeCarouselWithMarkedShows(List<Show> shows);
     }
 }
