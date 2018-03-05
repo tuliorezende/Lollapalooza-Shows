@@ -101,7 +101,7 @@ namespace Lollapalooza.Services.Service
             {
                 Uri = new Uri(show.ImageUrl),
                 Title = $"{show.Stage} - {show.Band}",
-                Text = $"{show.StartTime}"
+                Text = $"{show.StartTime} - {show.EndTime}"
             };
         }
 
