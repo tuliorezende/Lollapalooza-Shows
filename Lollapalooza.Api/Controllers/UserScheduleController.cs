@@ -38,15 +38,8 @@ namespace Lollapalooza.Api.Controllers
         [HttpPost]
         public IActionResult Post(string userIdentifier, int showId)
         {
-            try
-            {
-                _userSchedulerService.CreateUserScheduleEntry(userIdentifier, showId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            _userSchedulerService.CreateUserScheduleEntry(userIdentifier, showId);
+            return Ok();
         }
 
         /// <summary>
@@ -58,19 +51,12 @@ namespace Lollapalooza.Api.Controllers
         [HttpDelete]
         public IActionResult Delete(string userIdentifier, int showId = 0)
         {
-            try
-            {
-                if (showId != 0)
-                    _userSchedulerService.RemoveUserScheduleEntry(userIdentifier, showId);
-                else
-                    _userSchedulerService.RemoveAllUserScheduleEntry(userIdentifier);
+            if (showId != 0)
+                _userSchedulerService.RemoveUserScheduleEntry(userIdentifier, showId);
+            else
+                _userSchedulerService.RemoveAllUserScheduleEntry(userIdentifier);
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return Ok();
         }
     }
 }

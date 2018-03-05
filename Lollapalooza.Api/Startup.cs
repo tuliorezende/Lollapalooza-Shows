@@ -15,6 +15,7 @@ using System.IO;
 using Lollapalooza.Services.Service;
 using Lollapalooza.Services.Interface;
 using Lime.Protocol.Serialization.Newtonsoft;
+using Lollapalooza.Api.Middleware;
 
 namespace Lollapalooza.Api
 {
@@ -37,7 +38,8 @@ namespace Lollapalooza.Api
                      {
                          options.SerializerSettings.Converters.Add(settingsConverter);
                      }
-                 }); ;
+                 });
+
             services.AddDbContext<LollapaloozaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LollapaloozaContext")));
             services.AddSwaggerGen(c =>
             {
@@ -54,7 +56,6 @@ namespace Lollapalooza.Api
             services.AddSingleton<ICarouselService, CarouselService>();
             services.AddSingleton<IUserScheduleService, UserScheduleService>();
             services.AddSingleton<LollapaloozaContext>();
-
         }
 
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
@@ -68,6 +69,7 @@ namespace Lollapalooza.Api
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMvc();
         }
     }

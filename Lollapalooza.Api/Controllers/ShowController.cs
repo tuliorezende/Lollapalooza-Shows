@@ -44,20 +44,14 @@ namespace Lollapalooza.Api.Controllers
         [HttpGet, Route("GetAllShows/{stage}/{day}/{blipFormat}")]
         public IActionResult Get(string stage, string day, bool blipFormat = true)
         {
-            try
-            {
-                List<Show> showList = _showService.GetShows(stage, day);
+            List<Show> showList = _showService.GetShows(stage, day);
 
-                if (blipFormat)
-                    return Ok(_carouselService.CreateCarouselWithAllShows(showList));
-                else
-                    return Ok(showList);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            if (blipFormat)
+                return Ok(_carouselService.CreateCarouselWithAllShows(showList));
+            else
+                return Ok(showList);
         }
+
         /// <summary>
         /// Return Shows of a Specific user
         /// </summary>
@@ -67,20 +61,12 @@ namespace Lollapalooza.Api.Controllers
         [HttpGet, Route("GetUserShows/{userIdentifier}/{blipFormat}")]
         public IActionResult Get(string userIdentifier, bool blipFormat = true)
         {
-            try
-            {
-                List<Show> showList = _userSchedulerService.GetUserScheduleShows(userIdentifier);
+            List<Show> showList = _userSchedulerService.GetUserScheduleShows(userIdentifier);
 
-                if (blipFormat)
-                    return Ok(_carouselService.CreateCarouselWithMarkedShows(showList));
-                else
-                    return Ok(showList);
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            if (blipFormat)
+                return Ok(_carouselService.CreateCarouselWithMarkedShows(showList));
+            else
+                return Ok(showList);
         }
     }
 }
