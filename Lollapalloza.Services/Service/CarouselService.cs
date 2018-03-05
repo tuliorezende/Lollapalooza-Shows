@@ -15,7 +15,7 @@ namespace Lollapalooza.Services.Service
         /// </summary>
         /// <param name="shows"></param>
         /// <returns></returns>
-        public DocumentSelect[] CreateCarouselWithAllShows(List<Show> shows)
+        public DocumentCollection CreateCarouselWithAllShows(List<Show> shows)
         {
             List<DocumentSelect> documentSelect = new List<DocumentSelect>();
             foreach (Show item in shows)
@@ -48,14 +48,15 @@ namespace Lollapalooza.Services.Service
                 }
                 });
             }
-            return documentSelect.ToArray();
+
+            return CreateDocumentCollection(documentSelect);
         }
         /// <summary>
         /// Create Carousel with user marked shows
         /// </summary>
         /// <param name="shows"></param>
         /// <returns></returns>
-        public DocumentSelect[] CreaeCarouselWithMarkedShows(List<Show> shows)
+        public DocumentCollection CreateCarouselWithMarkedShows(List<Show> shows)
         {
             List<DocumentSelect> documentSelect = new List<DocumentSelect>();
             foreach (Show item in shows)
@@ -88,8 +89,24 @@ namespace Lollapalooza.Services.Service
                 }
                 });
             }
-            return documentSelect.ToArray();
+
+            return CreateDocumentCollection(documentSelect);
         }
+
+        /// <summary>
+        /// Creae Document Collection
+        /// </summary>
+        /// <param name="documentSelect"></param>
+        /// <returns></returns>
+        private DocumentCollection CreateDocumentCollection(List<DocumentSelect> documentSelect)
+        {
+            return new DocumentCollection
+            {
+                ItemType = DocumentSelect.MediaType,
+                Items = documentSelect.ToArray()
+            };
+        }
+
         /// <summary>
         /// Create Media Link element with shows informations
         /// </summary>
