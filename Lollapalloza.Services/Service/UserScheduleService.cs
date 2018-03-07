@@ -39,7 +39,7 @@ namespace Lollapalooza.Services.Service
         /// <returns></returns>
         public List<Show> GetUserScheduleShows(string userIdentifier)
         {
-            List<Show> showList = _dataBase.UserSchedule.Where(x => x.UserIdentifier == userIdentifier).Select(x => x.Show).ToList();
+            List<Show> showList = _dataBase.UserSchedule.Where(x => x.UserIdentifier == userIdentifier).Select(x => x.Show).OrderBy(x => x.ShowId).ToList();
 
             if (showList.Count == 0)
                 throw new Exception($"The query with useridentifier: {userIdentifier} returned 0 elements");

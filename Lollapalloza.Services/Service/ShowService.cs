@@ -24,7 +24,7 @@ namespace Lollapalooza.Services.Service
         /// <returns></returns>
         public List<Show> GetShows(string stage, string day)
         {
-            var showsList = _dataBase.Show.Where(x => x.Stage.ToLower() == stage.ToLower() && x.Day.ToLower() == day.ToLower()).ToList();
+            var showsList = _dataBase.Show.Where(x => x.Stage.ToLower() == stage.ToLower() && x.Day.ToLower() == day.ToLower()).OrderBy(x => x.ShowId).ToList();
 
             if (showsList.Count == 0)
                 throw new Exception($"The query with stage: {stage} and day: {day} returned 0 elements");
