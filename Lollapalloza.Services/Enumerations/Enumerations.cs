@@ -7,8 +7,11 @@ namespace Lollapalooza.Services.Enumerations
 {
     public enum ShowsDay
     {
+        [Description("Sexta")]
         Friday,
+        [Description("Sábado")]
         Saturday,
+        [Description("Domingo")]
         Sunday
     }
 

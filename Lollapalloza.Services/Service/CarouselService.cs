@@ -5,6 +5,7 @@ using Lollapalooza.Services.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Lollapalooza.Services.Enumerations;
 
 namespace Lollapalooza.Services.Service
 {
@@ -114,11 +115,13 @@ namespace Lollapalooza.Services.Service
         /// <returns></returns>
         private MediaLink CreateMediaLinkShow(Show show)
         {
+            ShowsDay showDay = ((ShowsDay)Enum.Parse(typeof(ShowsDay), show.Day));
+
             return new MediaLink
             {
                 Uri = new Uri(show.ImageUrl),
                 Title = $"{show.Stage} - {show.Band}",
-                Text = $"{show.StartTime} - {show.EndTime}"
+                Text = $"{showDay.GetDescription()} - {show.StartTime} - {show.EndTime}"
             };
         }
 
