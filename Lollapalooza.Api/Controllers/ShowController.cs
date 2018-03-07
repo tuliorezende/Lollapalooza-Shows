@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Lollapalooza.Services.Model;
 using Lollapalooza.Services.Interface;
+using Lollapalooza.Services.Enumerations;
 
 namespace Lollapalooza.Api.Controllers
 {
@@ -42,9 +43,9 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
         /// <returns></returns>
         [HttpGet, Route("GetAllShows/{stage}/{day}/{blipFormat}")]
-        public IActionResult Get(string stage, string day, bool blipFormat = true)
+        public IActionResult Get(ShowsStage stage, ShowsDay day, bool blipFormat = true)
         {
-            List<Show> showList = _showService.GetShows(stage, day);
+            List<Show> showList = _showService.GetShows(stage.GetDescription(), day.ToString());
 
             if (blipFormat)
                 return Ok(_carouselService.CreateCarouselWithAllShows(showList));
