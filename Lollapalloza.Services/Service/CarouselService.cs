@@ -35,14 +35,14 @@ namespace Lollapalooza.Services.Service
                         {
                             Value = new PlainText
                             {
-                                Text = "Teste"
+                                Text = $"{item.ShowId}_{item.Stage}"
                             }
                         },
                         Label = new DocumentContainer
                         {
                             Value = new PlainText
                             {
-                                Text = "Teste"
+                                Text = "Me Chama!"
                             }
                         }
                     }
