@@ -52,10 +52,14 @@ namespace Lollapalooza.Api
             }
             );
 
-            services.AddSingleton<IShowService, ShowService>();
             services.AddSingleton<ICarouselService, CarouselService>();
-            services.AddSingleton<IUserScheduleService, UserScheduleService>();
-            services.AddSingleton<LollapaloozaContext>();
+
+            //Based on Asp.net recommendation, the context injection needs to be scoped 
+            //because caching problems (when you delete information on database, the change isn't reflected on entity)
+            //All services that consuming context also needs to be scoped
+            services.AddScoped<IShowService, ShowService>();
+            services.AddScoped<IUserScheduleService, UserScheduleService>();
+            services.AddScoped<LollapaloozaContext>();
         }
 
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 

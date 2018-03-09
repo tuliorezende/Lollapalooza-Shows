@@ -9,7 +9,9 @@ namespace Lollapalooza.Services.Model
 {
     public class LollapaloozaContext : DbContext
     {
-        public LollapaloozaContext(DbContextOptions<LollapaloozaContext> options) : base(options) { }
+        public LollapaloozaContext(DbContextOptions<LollapaloozaContext> options) : base(options)
+        {
+        }
         public virtual DbSet<Show> Show { get; set; }
         public virtual DbSet<UserSchedule> UserSchedule { get; set; }
 
