@@ -27,7 +27,7 @@ namespace Lollapalooza.Services.Service
             {
                 ShowId = showId,
                 UserIdentifier = userIdentifier,
-                ScheduledDate = DateTime.Now
+                ScheduledDate = ReturnBrazilianDatetime()
             });
 
             _dataBase.SaveChanges();
@@ -78,6 +78,18 @@ namespace Lollapalooza.Services.Service
 
             _dataBase.UserSchedule.Remove(userSchedule);
             _dataBase.SaveChanges();
+        }
+
+        /// <summary>
+        /// Create Brazilian DateTime
+        /// </summary>
+        /// <returns></returns>
+        private DateTime ReturnBrazilianDatetime()
+        {
+            DateTime userScheduledDate = DateTime.Now.ToUniversalTime();
+            TimeZoneInfo timeInfo = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+
+            return TimeZoneInfo.ConvertTimeFromUtc(userScheduledDate, timeInfo);
         }
     }
 }
