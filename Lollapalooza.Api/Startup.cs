@@ -59,7 +59,7 @@ namespace Lollapalooza.Api
             //All services that consuming context also needs to be scoped
             services.AddScoped<IShowService, ShowService>();
             services.AddScoped<IUserScheduleService, UserScheduleService>();
-            services.AddScoped<LollapaloozaContext>();
+            //services.AddScoped<LollapaloozaContext>();
         }
 
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
