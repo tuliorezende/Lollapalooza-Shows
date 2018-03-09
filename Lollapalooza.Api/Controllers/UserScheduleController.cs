@@ -35,7 +35,7 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="userIdentifier">BLiP user Identifier</param>
         /// <param name="showId">Show ID</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Route("CreateUserSchedule/{userIdentifier}/{showId}")]
         public IActionResult Post(string userIdentifier, int showId)
         {
             _userSchedulerService.CreateUserScheduleEntry(userIdentifier, showId);
@@ -48,7 +48,7 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="userIdentifier">BLiP user Identifier</param>
         /// <param name="showId">Show ID</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete, Route("RemoveUserSchedule/{userIdentifier}/{showId?}")]
         public IActionResult Delete(string userIdentifier, int showId = 0)
         {
             if (showId != 0)
