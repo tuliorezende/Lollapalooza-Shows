@@ -12,6 +12,7 @@ namespace Lollapalooza.Services.Model
         public string UserIdentifier { get; set; }
         [ForeignKey("ShowId")]
         public int ShowId { get; set; }
+        public DateTime ScheduledDate { get; set; }
         [JsonIgnore]
         public virtual Show Show { get; set; }
     }

@@ -26,7 +26,8 @@ namespace Lollapalooza.Services.Service
             _dataBase.UserSchedule.Add(new UserSchedule
             {
                 ShowId = showId,
-                UserIdentifier = userIdentifier
+                UserIdentifier = userIdentifier,
+                ScheduledDate = DateTime.Now
             });
 
             _dataBase.SaveChanges();

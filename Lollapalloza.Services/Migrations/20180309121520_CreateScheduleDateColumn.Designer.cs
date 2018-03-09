@@ -11,9 +11,10 @@ using System;
 namespace Lollapalooza.Services.Migrations
 {
     [DbContext(typeof(LollapaloozaContext))]
-    partial class LollapaloozaContextModelSnapshot : ModelSnapshot
+    [Migration("20180309121520_CreateScheduleDateColumn")]
+    partial class CreateScheduleDateColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
