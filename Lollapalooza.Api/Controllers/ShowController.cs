@@ -42,7 +42,7 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="day">Day parameter</param>
         /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
         /// <returns></returns>
-        [HttpGet, Route("GetAllShows/{stage}/{day}/{blipFormat?}")]
+        [HttpGet, Route("GetAllShows/{stage}/{day}/{blipFormat:bool}")]
         public IActionResult Get(ShowsStage stage, ShowsDay day, bool blipFormat = true)
         {
             List<Show> showList = _showService.GetShows(stage.GetDescription(), day.ToString());
@@ -59,7 +59,7 @@ namespace Lollapalooza.Api.Controllers
         /// <param name="userIdentifier">BLiP user Identifier</param>
         /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
         /// <returns></returns>
-        [HttpGet, Route("GetUserShows/{userIdentifier}/{blipFormat?}")]
+        [HttpGet, Route("GetUserShows/{userIdentifier}/{blipFormat:bool}")]
         public IActionResult Get(string userIdentifier, bool blipFormat = true)
         {
             List<Show> showList = _userSchedulerService.GetUserScheduleShows(userIdentifier);
@@ -68,6 +68,19 @@ namespace Lollapalooza.Api.Controllers
                 return Ok(_carouselService.CreateCarouselWithMarkedShows(showList));
             else
                 return Ok(showList);
+        }
+        /// <summary>
+        /// Return all shows with user schedule Flag
+        /// </summary>
+        /// <param name="userIdentifier"></param>
+        /// <returns></returns>
+        [HttpGet, Route("GetShowsWithFlag/{userIdentifier}")]
+        public IActionResult Get(string userIdentifier)
+        {
+
+            List<ShowScheduleFlags> flaggedShows = _userSchedulerService.GetAllShowsWithUserScheduleFlags(userIdentifier);
+
+            return Ok(flaggedShows);
         }
     }
 }

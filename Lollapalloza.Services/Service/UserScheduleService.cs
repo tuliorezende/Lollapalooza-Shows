@@ -34,6 +34,23 @@ namespace Lollapalooza.Services.Service
         }
 
         /// <summary>
+        /// Get all shows with user flag
+        /// </summary>
+        /// <param name="userIdentifier"></param>
+        /// <returns></returns>
+        public List<ShowScheduleFlags> GetAllShowsWithUserScheduleFlags(string userIdentifier)
+        {
+            var flaggedShows = _dataBase.Show.GroupJoin(_dataBase.UserSchedule,
+                show => show.ShowId,
+                schedule => schedule.ShowId,
+                (show, schedule) => new { show, Scheduled = schedule })
+                .SelectMany(showsmarcados => showsmarcados.Scheduled.DefaultIfEmpty(),
+                (showsmarcados, schedule) => new ShowScheduleFlags { Show = showsmarcados.show, Scheduled = schedule != null }).ToList();
+
+            return flaggedShows;
+        }
+
+        /// <summary>
         /// Get all show that user marked
         /// </summary>
         /// <param name="userIdentifier"></param>

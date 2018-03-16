@@ -11,5 +11,6 @@ namespace Lollapalooza.Services.Interface
         void RemoveUserScheduleEntry(string userIdentifier, int showId);
         void RemoveAllUserScheduleEntry(string userIdentifier);
         List<Show> GetUserScheduleShows(string userIdentifier);
+        List<ShowScheduleFlags> GetAllShowsWithUserScheduleFlags(string userIdentifier);
     }
 }

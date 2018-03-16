@@ -39,7 +39,6 @@ namespace Lollapalooza.Api
                          options.SerializerSettings.Converters.Add(settingsConverter);
                      }
                  });
-
             services.AddDbContext<LollapaloozaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LollapaloozaContext")));
             services.AddSwaggerGen(c =>
             {
@@ -73,7 +72,7 @@ namespace Lollapalooza.Api
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();           
             app.UseMvc();
         }
     }
