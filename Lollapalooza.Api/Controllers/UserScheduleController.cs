@@ -34,11 +34,13 @@ namespace Lollapalooza.Api.Controllers
         /// </summary>
         /// <param name="userIdentifier">BLiP user Identifier</param>
         /// <param name="showId">Show ID</param>
+        /// <param name="showRemember">Remember use on BOT</param>
+        /// <param name="timeMinutesToAlert">in minutes, time to alert user</param>
         /// <returns></returns>
-        [HttpPost, Route("CreateUserSchedule/{userIdentifier}/{showId:int}")]
-        public IActionResult Post(string userIdentifier, int showId = 0)
+        [HttpPost, Route("CreateUserSchedule/{userIdentifier}/{showId:int}/{showRemember}/{timeMinutesToAlert}")]
+        public IActionResult Post(string userIdentifier, int showId, bool showRemember, int timeMinutesToAlert)
         {
-            _userSchedulerService.CreateUserScheduleEntry(userIdentifier, showId);
+            _userSchedulerService.CreateUserScheduleEntry(userIdentifier, showId, showRemember, timeMinutesToAlert);
             return Ok();
         }
 

@@ -10,10 +10,11 @@ namespace Lollapalooza.Services.Service
     public class UserScheduleService : IUserScheduleService
     {
         private LollapaloozaContext _dataBase;
-
-        public UserScheduleService(LollapaloozaContext lollapaloozaContext)
+        private IScheduleExtensionService _scheduleExtensionService;
+        public UserScheduleService(LollapaloozaContext lollapaloozaContext, IScheduleExtensionService scheduleExtensionService)
         {
             _dataBase = lollapaloozaContext;
+            _scheduleExtensionService = scheduleExtensionService;
         }
 
         /// <summary>
@@ -21,16 +22,24 @@ namespace Lollapalooza.Services.Service
         /// </summary>
         /// <param name="userIdentifier"></param>
         /// <param name="showId"></param>
-        public void CreateUserScheduleEntry(string userIdentifier, int showId)
+        public void CreateUserScheduleEntry(string userIdentifier, int showId, bool showRemember, int timeMinutesToAlert)
         {
             _dataBase.UserSchedule.Add(new UserSchedule
             {
                 ShowId = showId,
                 UserIdentifier = userIdentifier,
-                ScheduledDate = ReturnBrazilianDatetime()
+                ScheduledDate = ReturnBrazilianDatetime(),
+                ShowRemember = showRemember,
+                TimeMinutesToAlert = timeMinutesToAlert
             });
 
             _dataBase.SaveChanges();
+
+            if (showRemember)
+            {
+                var show = _dataBase.Show.Where(x => x.ShowId == showId).First();
+                _scheduleExtensionService.InsertUserAtDistributionListAsync(userIdentifier, show, timeMinutesToAlert);
+            }
         }
 
         /// <summary>
@@ -79,6 +88,12 @@ namespace Lollapalooza.Services.Service
 
             _dataBase.UserSchedule.RemoveRange(userSchedule);
             _dataBase.SaveChanges();
+
+            foreach (var item in userSchedule)
+            {
+                var show = _dataBase.Show.Where(x => x.ShowId == item.ShowId).First();
+                _scheduleExtensionService.RemoveUserFromDistributionListAsync(userIdentifier, show, item.TimeMinutesToAlert);
+            }
         }
 
         /// <summary>
@@ -95,6 +110,9 @@ namespace Lollapalooza.Services.Service
 
             _dataBase.UserSchedule.Remove(userSchedule);
             _dataBase.SaveChanges();
+
+            var show = _dataBase.Show.Where(x => x.ShowId == showId).First();
+            _scheduleExtensionService.RemoveUserFromDistributionListAsync(userIdentifier, show, userSchedule.TimeMinutesToAlert);
         }
 
         /// <summary>

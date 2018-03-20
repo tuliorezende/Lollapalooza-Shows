@@ -16,6 +16,9 @@ using Lollapalooza.Services.Service;
 using Lollapalooza.Services.Interface;
 using Lime.Protocol.Serialization.Newtonsoft;
 using Lollapalooza.Api.Middleware;
+using Lollapalooza.Services.Sender;
+using Take.Blip.Client;
+using Take.Blip.Client.Extensions.Broadcast;
 
 namespace Lollapalooza.Api
 {
@@ -58,7 +61,9 @@ namespace Lollapalooza.Api
             //All services that consuming context also needs to be scoped
             services.AddScoped<IShowService, ShowService>();
             services.AddScoped<IUserScheduleService, UserScheduleService>();
-            //services.AddScoped<LollapaloozaContext>();
+            services.AddScoped<IScheduleExtensionService, ScheduleExtensionService>();
+            services.AddSingleton<ISender, CustomSender>();
+            services.AddSingleton<IBroadcastExtension, BroadcastExtension>();
         }
 
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
@@ -72,7 +77,7 @@ namespace Lollapalooza.Api
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            app.UseMiddleware<ErrorHandlingMiddleware>();           
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMvc();
         }
     }
