@@ -36,16 +36,31 @@ namespace Lollapalooza.Api.Controllers
             _carouselService = carouselService;
         }
         /// <summary>
-        /// Method to return the list of show of a specific day and a specific stage
+        /// Method to return the list of shows of a specific day and a specific stage
         /// </summary>
         /// <param name="stage">Stage Name parameter</param>
         /// <param name="day">Day parameter</param>
         /// <param name="blipFormat">If this value is true, this method will serialize the list on Carousel Format, else, will return the original json</param>
         /// <returns></returns>
-        [HttpGet, Route("GetAllShows/{stage}/{day}/{blipFormat:bool}")]
+        [HttpGet, Route("GetFilteredShows/{stage}/{day}/{blipFormat:bool}")]
         public IActionResult Get(ShowsStage stage, ShowsDay day, bool blipFormat = true)
         {
             List<Show> showList = _showService.GetShows(stage.GetDescription(), day.ToString());
+
+            if (blipFormat)
+                return Ok(_carouselService.CreateCarouselWithAllShows(showList));
+            else
+                return Ok(showList);
+        }
+        /// <summary>
+        /// Method to return the list of shows, without filter
+        /// </summary>
+        /// <param name="blipFormat"></param>
+        /// <returns></returns>
+        [HttpGet, Route("GetAllShows/{blipFormat:bool}")]
+        public IActionResult Get(bool blipFormat = true)
+        {
+            List<Show> showList = _showService.GetShowsWithoutFilter();
 
             if (blipFormat)
                 return Ok(_carouselService.CreateCarouselWithAllShows(showList));

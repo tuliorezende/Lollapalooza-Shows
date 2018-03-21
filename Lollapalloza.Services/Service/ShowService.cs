@@ -32,9 +32,18 @@ namespace Lollapalooza.Services.Service
             return showsList;
         }
 
-        public List<Show> GetSpecificShows(string bandName, string stage, string day)
+        /// <summary>
+        /// Return all shows
+        /// </summary>
+        /// <returns></returns>
+        public List<Show> GetShowsWithoutFilter()
         {
-            throw new NotImplementedException();
+            var showsList = _dataBase.Show.OrderBy(x => x.ShowId).ToList();
+
+            if (showsList.Count == 0)
+                throw new Exception($"The query without filter returned 0 elements");
+
+            return showsList;
         }
     }
 }
