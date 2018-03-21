@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Lollapalooza.Services.CustomFormatter;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,7 +23,7 @@ namespace Lollapalooza.Services.Model
         public string Stage { get; set; }
         [Required, JsonProperty("ImageUrl")]
         public string ImageUrl { get; set; }
-        [Required, JsonProperty("ShowDate")]
+        [Required, JsonProperty("ShowDate"), JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
         public DateTime ShowDate { get; set; }
         [JsonIgnore]
         public virtual List<UserSchedule> UserScheduler { get; set; }
