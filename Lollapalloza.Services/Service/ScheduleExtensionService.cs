@@ -18,6 +18,7 @@ namespace Lollapalooza.Services.Service
         {
             _broadcastExtension = broadcastExtension;
         }
+
         /// <summary>
         /// Create distribution list and insert user inside
         /// </summary>
@@ -33,6 +34,40 @@ namespace Lollapalooza.Services.Service
         }
 
         /// <summary>
+        /// Validate user distribution list, based on user choices
+        /// </summary>
+        /// <param name="userIdentifier"></param>
+        /// <param name="oldUserSchedules"></param>
+        /// <param name="showRemember"></param>
+        /// <param name="timeMinutesToAlert"></param>
+        /// <returns></returns>
+        public async Task ManageUserDistributionListAsync(string userIdentifier, List<UserSchedule> oldUserSchedules, bool showRemember, int timeMinutesToAlert)
+        {
+            string distributionListName = string.Empty;
+            foreach (var item in oldUserSchedules)
+            {
+                if (!showRemember)
+                {
+                    //remove user from all distribution List
+                    distributionListName = GetDistributionListName(item.Show, item.TimeMinutesToAlert);
+                    await _broadcastExtension.DeleteRecipientAsync(distributionListName, Identity.Parse(userIdentifier));
+                }
+                else
+                {
+                    //remove from old distribution list
+                    distributionListName = GetDistributionListName(item.Show, item.TimeMinutesToAlert);
+                    await _broadcastExtension.DeleteRecipientAsync(distributionListName, Identity.Parse(userIdentifier));
+
+                    //create and insert on the new list
+                    distributionListName = GetDistributionListName(item.Show, timeMinutesToAlert);
+                    await _broadcastExtension.CreateDistributionListAsync(distributionListName);
+
+                    await _broadcastExtension.AddRecipientAsync(distributionListName, Identity.Parse(userIdentifier));
+                }
+            }
+        }
+
+        /// <summary>
         /// Remove user from distribution list
         /// </summary>
         /// <param name="userIdentifier"></param>
@@ -44,6 +79,12 @@ namespace Lollapalooza.Services.Service
             await _broadcastExtension.DeleteRecipientAsync(distributionListName, Identity.Parse(userIdentifier));
         }
 
-        private string GetDistributionListName(Show show, int timeMinutesToAlert) => $"{show.Day.RemoveSpecialCharacter()}_{show.StartTime.RemoveSpecialCharacter()}_{timeMinutesToAlert}_{show.Band.RemoveSpecialCharacter()}";
+        /// <summary>
+        /// Generate Distribution List Name
+        /// </summary>
+        /// <param name="show"></param>
+        /// <param name="timeMinutesToAlert"></param>
+        /// <returns></returns>
+        private string GetDistributionListName(Show show, int timeMinutesToAlert) => $"{show.Day.RemoveSpecialCharacter()}_{show.StartTime.RemoveSpecialCharacter()}_{timeMinutesToAlert}_{show.ShowId}_{show.Band.RemoveSpecialCharacter()}";
     }
 }

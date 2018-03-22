@@ -1,5 +1,7 @@
 ﻿using Lollapalooza.Services.Interface;
 using Lollapalooza.Services.Model;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +75,46 @@ namespace Lollapalooza.Services.Service
 
             return showList;
 
+        }
+
+        /// <summary>
+        /// Manage User Schedule Services
+        /// </summary>
+        /// <param name="userIdentifier"></param>
+        /// <param name="showRemember"></param>
+        /// <param name="timeMinutesToAlert"></param>
+        public void ManageUserSchedule(string userIdentifier, bool showRemember, int timeMinutesToAlert)
+        {
+            List<UserSchedule> userSchedule = _dataBase.UserSchedule
+                .Include(x => x.Show)
+                .Where(x => x.UserIdentifier == userIdentifier).ToList();
+
+            List<UserSchedule> userScheduleCopy = new List<UserSchedule>();
+
+            //Create a copy of the original list
+            foreach (var item in userSchedule)
+            {
+                userScheduleCopy.Add(new UserSchedule
+                {
+                    ScheduledDate = item.ScheduledDate,
+                    Show = item.Show,
+                    ShowId = item.ShowId,
+                    ShowRemember = item.ShowRemember,
+                    TimeMinutesToAlert = item.TimeMinutesToAlert,
+                    UserIdentifier = item.UserIdentifier
+                });
+            }
+
+            foreach (var item in userSchedule)
+            {
+                item.ShowRemember = showRemember;
+                item.TimeMinutesToAlert = timeMinutesToAlert;
+            }
+
+            _dataBase.UpdateRange(userSchedule);
+            _dataBase.SaveChanges();
+
+            _scheduleExtensionService.ManageUserDistributionListAsync(userIdentifier, userScheduleCopy, showRemember, timeMinutesToAlert);
         }
 
         /// <summary>

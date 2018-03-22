@@ -61,6 +61,19 @@ namespace Lollapalooza.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentifier"></param>
+        /// <param name="showRemember"></param>
+        /// <param name="timeMinutesToAlert"></param>
+        /// <returns></returns>
+        [HttpPut, Route("UpdateScheduleNotification/{userIdentifier}/{showRemember}/{timeMinutesToAlert}")]
+        public IActionResult Update(string userIdentifier, bool showRemember, int timeMinutesToAlert)
+        {
+            _userSchedulerService.ManageUserSchedule(userIdentifier, showRemember, timeMinutesToAlert);
+            return Ok();
+        }
 
     }
 }
