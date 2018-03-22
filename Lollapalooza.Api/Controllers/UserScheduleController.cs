@@ -62,11 +62,11 @@ namespace Lollapalooza.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Update User schedule and manage user on BLiP distribution lists
         /// </summary>
-        /// <param name="userIdentifier"></param>
-        /// <param name="showRemember"></param>
-        /// <param name="timeMinutesToAlert"></param>
+        /// <param name="userIdentifier">user identifier</param>
+        /// <param name="showRemember">Remember use on BOT, for all scheduler shows. If pass false, the user will be removed from all the lists</param>s
+        /// <param name="timeMinutesToAlert">in minutes, time to alert user</param>
         /// <returns></returns>
         [HttpPut, Route("UpdateScheduleNotification/{userIdentifier}/{showRemember}/{timeMinutesToAlert}")]
         public IActionResult Update(string userIdentifier, bool showRemember, int timeMinutesToAlert)
